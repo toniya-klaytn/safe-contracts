@@ -48,12 +48,11 @@ const soliditySettings = !!SOLIDITY_SETTINGS ? JSON.parse(SOLIDITY_SETTINGS) : u
 const deterministicDeployment = CUSTOM_DETERMINISTIC_DEPLOYMENT == "true" ?
   (network: string) => {
     const info = getSingletonFactoryInfo(parseInt(network))
-    if (!info) return undefined
     return {
-      factory: info.address,
-      deployer: info.signerAddress,
-      funding: BigNumber.from(info.gasLimit).mul(BigNumber.from(info.gasPrice)).toString(),
-      signedTx: info.transaction
+      factory: "0x914d7Fec6aaC8cd542e72Bca78B30650d45643d7",
+      deployer: "0xE1CB04A0fA36DdD16a06ea828007E35e1a3cBC37",
+      funding: BigNumber.from("100000").mul(BigNumber.from("250000000000")).toString(),
+      signedTx: "0xf8a780853a35294400830186a08080b853604580600e600039806000f350fe7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe03601600081602082378035828234f58015156039578182fd5b8082525050506014600cf38207f6a0c49b7f8fdf85e3bf06c9b1dea99f3c1c53b4aea378e38f2e8fea5f635e2446ada0277bded3fbc5b3e97ce8637c8543bc0caaf8416de5be9fffed4208374618a638"
     }
   } : undefined
 
@@ -120,6 +119,10 @@ const userConfig: HardhatUserConfig = {
     fantomTestnet: {
       ...sharedNetworkConfig,
       url: `https://rpc.testnet.fantom.network/`,
+    },
+    baobab: {
+      ...sharedNetworkConfig,
+      url: `https://api.baobab.klaytn.net:8651`,
     }
   },
   deterministicDeployment,
